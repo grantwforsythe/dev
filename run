@@ -1,0 +1,53 @@
+#!/usr/bin/env bash
+
+# A new process is started and the directory is changed there. It does not happened in the process that started the execution of this script
+cwd=$(cd $(dirname "${BASH_SOURCE[0]}") && pwd)
+filter="$1"
+dry="0"
+
+## TODO: Add echo statements to explain how to use script if missused
+
+# While the amount of args...
+while [[ $# > 0 ]]; do
+    if [[ $1 == "--dry" ]]; then
+        dry="1"
+    else
+        filter="$1"
+    fi
+
+    # Remove the first arg from the arg list
+    shift
+done
+
+log() {
+    if [[ $dry == "1" ]]; then
+        ## Print out everything that was passed
+        echo "[DRY RUN]: $@"
+    else
+        echo "$@"
+    fi
+}
+
+execute() {
+    log "execute $@"
+    if [[ $dry == "1" ]]; then
+        return
+    fi
+
+    "$@"
+}
+
+
+
+# Get all scripts in the run directory that are executable
+scripts=$( find ./runs -maxdepth 1 -mindepth 1 -executable -type f )
+
+for script in $scripts; do
+    # Skip over scripts that do not match the filter
+    if echo "$script" | grep -qv "$filter"; then
+        log "filtering $script"
+        continue
+    fi
+
+    execute ./$script
+done
