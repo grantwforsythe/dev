@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+git clone --recurse-submodules https://github.com/grantwforsythe/dotfiles.git $HOME/.dotfiles
+
+sudo apt install stow
+
+cd $HOME/dotfiles && ./install

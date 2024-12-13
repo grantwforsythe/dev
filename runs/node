@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+sudo apt install unzip
+
+curl -fsSL https://fnm.vercel.app/install | bash --skip-shell
