@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+# NOTE: Read in data from stdin, output to stdout, and send errors to stderror when writing CLI applications
+
 # A new process is started and the directory is changed there. It does not happened in the process that started the execution of this script
 cwd=$(cd $(dirname "${BASH_SOURCE[0]}") && pwd)
 filter="$1"
