@@ -1,6 +1,20 @@
 #!/usr/bin/env bash
+set -e
 
-git clone -b v0.10.1 https://github.com/neovim/neovim.git $HOME/neovim
+MAJOR_VERSION=0
+LATEST_VERSION=$(
+    git ls-remote --tags https://github.com/neovim/neovim.git | \
+    grep -E "v${MAJOR_VERSION}\.[0-9]+\.[0-9]+$" | \
+    cut -d/ -f3 | \
+    sort -V | \
+    tail -n1
+)
+
+if [ -d "$HOME/neovim" ]; then
+    rm -rf $HOME/neovim
+fi
+
+git clone -b $LATEST_VERSION https://github.com/neovim/neovim.git $HOME/neovim
 sudo apt-get install ninja-build gettext cmake unzip curl build-essential lua5.1 liblua5.1-0-dev
 
 cd $HOME/neovim
