@@ -1,2 +1,4 @@
 #!/usr/bin/env bash
+set -e
+
 sudo apt install i3 rofi

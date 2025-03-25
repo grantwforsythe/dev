@@ -1,4 +1,6 @@
 #!/usr/bin/env bash
+set -e
+
 sudo apt install zsh
 
 chsh -s $(which zsh)
