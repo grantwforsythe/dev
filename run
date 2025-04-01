@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+set -e
 
 # NOTE: Read in data from stdin, output to stdout, and send errors to stderror when writing CLI applications
 
