@@ -6,3 +6,11 @@ curl -sL https://raw.githubusercontent.com/kevincobain2000/gobrew/master/git.io.
 export PATH="$HOME/.gobrew/current/bin:$HOME/.gobrew/bin:$PATH"
 
 gobrew use latest
+
+# Formatter
+go install github.com/segmentio/golines@latest
+# golines will use goimports as a base formatter if it is installed on the system
+go install golang.org/x/tools/cmd/goimports@latest
+
+# binary will be $(go env GOPATH)/bin/golangci-lint
+curl -sSfL https://raw.githubusercontent.com/golangci/golangci-lint/HEAD/install.sh | sh -s -- -b $(go env GOPATH)/bin v2.1.6
