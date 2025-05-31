@@ -4,14 +4,13 @@ set -e
 sudo apt install git
 
 LATEST_LAZYGIT_VERSION=$(curl -s "https://api.github.com/repos/jesseduffield/lazygit/releases/latest" | \grep -Po '"tag_name": *"v\K[^"]*')
-curl -Lo lazygit.tar.gz "https://github.com/jesseduffield/lazygit/releases/download/v${LAZYGIT_VERSION}/lazygit_${LAZYGIT_VERSION}_Linux_x86_64.tar.gz"
+curl -Lo lazygit.tar.gz "https://github.com/jesseduffield/lazygit/releases/download/v${LATEST_LAZYGIT_VERSION}/lazygit_${LATEST_LAZYGIT_VERSION}_Linux_x86_64.tar.gz"
 tar xf lazygit.tar.gz lazygit
 sudo install lazygit -D -t /usr/local/bin/
 rm lazygit lazygit.tar.gz 
 
-LATEST_DELTA_VERSION=$(curl -s "https://api.github.com/repos/dandavison/delta/releases/latest" | \grep -Po '"tag_name": *"v\K[^"]*')
-curl -Lo delta.tar.gz "https://github.com/dandavison/delta/releases/download/${LATEST_DELTA_VERSION}/delta-${LATEST_DELTA_VERSION}-x86_64-unknown-linux-gnu.tar.gz"
+curl -Lo delta.tar.gz "https://github.com/dandavison/delta/releases/download/0.18.2/delta-0.18.2-x86_64-unknown-linux-gnu.tar.gz"
 tar xf delta.tar.gz
 sudo install delta-0.18.2-x86_64-unknown-linux-gnu/delta -D -t /usr/bin/
-rm delta.tar.gz delta
+rm delta.tar.gz
 rm -rf delta-0.18.2-x86_64-unknown-linux-gnu
