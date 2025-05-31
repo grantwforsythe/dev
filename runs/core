@@ -1,4 +1,24 @@
 #!/usr/bin/env bash
 set -e
 
-sudo apt install xclip fzf tldr ripgrep git jq bat rg
+# xclip: command line interface to the X11 clipboard
+# fzf: command-line fuzzy finder
+# ripgrep: fast search tool like grep, optimized for speed
+# git: distributed version control system
+# jq: command-line JSON processor
+# bat: cat clone with syntax highlighting and Git integration
+# fd-find: simple, fast and user-friendly alternative to 'find'
+sudo apt install -y \
+    xclip \
+    fzf \
+    ripgrep \
+    git \
+    jq \
+    bat \
+    fd-find
+
+# NOTE: The binary is called fdfind as the binary name fd is already used by another package.
+# Creating a symlink to fd in order to use fd in the same way as in this documentation.
+ln -sf $(which fdfind) ~/.local/bin/fd
+
+curl -sSfL https://raw.githubusercontent.com/ajeetdsouza/zoxide/main/install.sh | sh
