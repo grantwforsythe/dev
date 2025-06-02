@@ -2,7 +2,6 @@
 set -e
 
 # xclip: command line interface to the X11 clipboard
-# fzf: command-line fuzzy finder
 # ripgrep: fast search tool like grep, optimized for speed
 # git: distributed version control system
 # jq: command-line JSON processor
@@ -10,12 +9,19 @@ set -e
 # fd-find: simple, fast and user-friendly alternative to 'find'
 sudo apt install -y \
     xclip \
-    fzf \
     ripgrep \
     git \
     jq \
     bat \
     fd-find
+
+# fzf: command-line fuzzy finder
+if [ ! -d "$HOME/.fzf" ]; then
+    git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf
+else
+    cd "$HOME/.fzf" && git pull
+fi
+~/.fzf/install
 
 # NOTE: The binary is called fdfind as the binary name fd is already used by another package.
 # Creating a symlink to fd in order to use fd in the same way as in this documentation.
