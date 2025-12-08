@@ -10,13 +10,25 @@ LATEST_VERSION=$(
     tail -n1
 )
 
+TARGET_DIR="$HOME/neovim"
+TEMP_DIR="$(mktemp -d)"
+
+echo "Cloning neovim into temporary directory: $TEMP_DIR"
+git clone -b $LATEST_VERSION https://github.com/neovim/neovim.git $TEMP_DIR
+
+echo "Installing required dependencies"
+sudo apt-get install ninja-build gettext cmake unzip curl build-essential lua5.1 liblua5.1-0-dev
+
+echo "Copying files to: $TARGET_DIR"
 if [ -d "$HOME/neovim" ]; then
     rm -rf $HOME/neovim
 fi
 
-git clone -b $LATEST_VERSION https://github.com/neovim/neovim.git $HOME/neovim
-sudo apt-get install ninja-build gettext cmake unzip curl build-essential lua5.1 liblua5.1-0-dev
+mv $TEMP_DIR $TARGET_DIR
+rm -rf $TEMP_DIR
 
 cd $HOME/neovim
 make CMAKE_BUILD_TYPE=RelWithDebInfo
 sudo make install
+
+nvim --version
