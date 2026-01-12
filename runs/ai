@@ -1,0 +1,36 @@
+#!/usr/bin/env bash
+set -e
+
+# --- Node.js version check ---
+MIN_NODE_VERSION="20.15"
+
+if ! command -v node &> /dev/null
+then
+    echo "Error: node is not installed. Please install Node.js."
+    exit 1
+fi
+
+CURRENT_NODE_VERSION=$(node -v | sed 's/v//')
+
+# Check if the current version is less than or equal to the minimum required version.
+# This is done by finding the lowest version number between the two. If that's the current version,
+# it's too low.
+if [ "$(printf '%s\n' "$MIN_NODE_VERSION" "$CURRENT_NODE_VERSION" | sort -V | head -n1)" = "$CURRENT_NODE_VERSION" ] && [ "$MIN_NODE_VERSION" != "$CURRENT_NODE_VERSION" ]; then
+    echo "Error: Your Node.js version is $CURRENT_NODE_VERSION. This script requires a version greater than $MIN_NODE_VERSION."
+    echo "Please upgrade your Node.js version."
+    exit 1
+fi
+# --- End of Node.js version check ---
+
+npm install -g @google/gemini-cli
+
+# --- uv check ---
+if ! command -v uv &> /dev/null
+then
+    echo "Error: uv is not installed. Please install uv."
+    echo "You can try running 'run python' to install it."
+    exit 1
+fi
+# --- end uv check ---
+
+uv tool install specify-cli --from git+https://github.com/github/spec-kit.git
