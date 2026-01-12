@@ -1,0 +1,15 @@
+#!/usr/bin/env bash
+set -e
+
+MAJOR_VERSION=1
+LATEST_VERSION=$(
+    git ls-remote --tags https://github.com/obsidianmd/obsidian-releases.git | \
+    grep -E "v${MAJOR_VERSION}\.[0-9]+\.[0-9]+$" | \
+    cut -d/ -f3 | \
+    sort -V | \
+    tail -n1
+)
+
+mkdir $HOME/Applications/ && cd $HOME/Applications/
+
+wget "https://github.com/obsidianmd/obsidian-releases/releases/download/${LATEST_VERSION}/Obsidian-${LATEST_VERSION#v}.AppImage"
